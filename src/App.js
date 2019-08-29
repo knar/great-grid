@@ -1,33 +1,37 @@
-import React, { useEffect } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react'
 
-import { newGrid } from './db.js'
+import Bar from './components/Bar.js'
+import './App.css'
+
+import { newGrid, subscribeToGrid } from './db.js'
 
 function App() {
+	const [tiles, setTiles] = useState([
+		{ color: '#ff6666', chr: 'r' },
+		{ color: '#66ff66', chr: 'g' },
+		{ color: '#6666ff', chr: 'b' },
+	])
+	const [selected, setSelected] = useState(0)
 
 	useEffect(() => {
-		newGrid('first')		
+		document.addEventListener('keydown', (e) => {
+			if (e.key < '0' || e.key > '9') return
+			setSelected(parseInt(e.key))
+		})
+
+		subscribeToGrid('lobby', data => {
+			setTiles(data.tiles)
+		})
 	})
 
 	return (
 		<div className="App">
-		<header className="App-header">
-		<img src={logo} className="App-logo" alt="logo" />
-		<p>
-		Edit <code>src/App.js</code> and save to reload.
-		</p>
-		<a
-		className="App-link"
-		href="https://reactjs.org"
-		target="_blank"
-		rel="noopener noreferrer"
-		>
-		Learn React
-		</a>
-		</header>
+			<Bar
+				tiles={ tiles }
+				selected={ selected }
+			/>
 		</div>
-	);
+	)
 }
 
-export default App;
+export default App

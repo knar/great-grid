@@ -8,8 +8,11 @@ function Bar({ tiles, selected, setSelected }) {
 	
 	useEffect(() => {
 		const keyListener = (e) => {
-			if (e.key < 'a' || e.key > 'z') return
-			setTile('lobby', selected, { chr: e.key.toUpperCase() })
+			if (e.key > 'a' && e.key < 'z') {
+				setTile('lobby', selected, { chr: e.key.toUpperCase() })
+			} else if (e.key === 'Escape' && showColorPicker) {
+				setShowColorPicker(false)	
+			}
 		}
 		
 		document.addEventListener('keydown', keyListener)

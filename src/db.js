@@ -15,23 +15,35 @@ firebase.initializeApp(firebaseConfig)
 
 const db = firebase.firestore()
 
-const defaultTiles = [
-	{ color: '#000', chr: 'A' },
-	{ color: '#111', chr: 'B' },
-	{ color: '#222', chr: 'C' },
-	{ color: '#333', chr: 'D' },
-	{ color: '#444', chr: 'E' },
-	{ color: '#555', chr: 'F' },
-	{ color: '#666', chr: 'G' },
-	{ color: '#777', chr: 'H' },
-	{ color: '#888', chr: 'I' },
-	{ color: '#999', chr: 'J' },
-];
+const defaultTiles = {
+	0: { color: '#000', chr: 'A' },
+	1: { color: '#111', chr: 'B' },
+	2: { color: '#222', chr: 'C' },
+	3: { color: '#333', chr: 'D' },
+	4: { color: '#444', chr: 'E' },
+	5: { color: '#555', chr: 'F' },
+	6: { color: '#666', chr: 'G' },
+	7: { color: '#777', chr: 'H' },
+	8: { color: '#888', chr: 'I' },
+	9: { color: '#999', chr: 'J' },
+};
 
 const eight = new Array(8).fill(0)
 const defaultGrid = Object.fromEntries(
 	eight.flatMap((_, i) => eight.map((_, j) => [`${i},${j}`, 0]))
 )
+
+export function subscribeToGrid(id, setGrid) {
+	db.collection('grids').doc(id)
+		.onSnapshot((doc) => {
+			const grid = doc.data();
+
+			// Convert pallete object to array
+			grid.tiles = Object.values(grid.tiles)
+
+			setGrid(grid)
+		})
+}
 
 export async function newGrid(id) {
 	await db.collection('grids').doc(id).set({
@@ -43,10 +55,10 @@ export async function newGrid(id) {
 	return id
 }
 
-export function subscribeToGrid(id, setGrid) {
-	db.collection('grids').doc(id)
-		.onSnapshot((doc) => {
-			setGrid(doc.data())
-		})
+export async function setTile(id, index, tile) {
+	const updates = {};
+	for (const [prop, value] of Object.entries(tile)) {
+		updates[`tiles.${index}.${prop}`] = value;
+	}
+	await db.collection('grids').doc(id).update(updates);
 }
-

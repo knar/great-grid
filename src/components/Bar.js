@@ -1,10 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { ChromePicker } from 'react-color'
 
 import { setTile } from '../db.js'
 
 function Bar({ tiles, selected, setSelected }) {
 	const [showColorPicker, setShowColorPicker] = useState(false)
+	
+	useEffect(() => {
+		const keyListener = (e) => {
+			if (e.key < 'a' || e.key > 'z') return
+			setTile('lobby', selected, { chr: e.key.toUpperCase() })
+		}
+		
+		document.addEventListener('keydown', keyListener)
+
+		return (() => {
+			document.removeEventListener('keydown', keyListener)
+		})
+	})
 
 	const renderTile = ({ color, chr }, i) => {
 		const className = (i === selected) ? 'palette-tile palette-tile-selected' : 'palette-tile'
@@ -19,10 +32,9 @@ function Bar({ tiles, selected, setSelected }) {
 		}
 
 		return (
-			<div className={ className } key={ i } onClick={ handleClick }>
-				<div className='palette-color' style={{ backgroundColor: color }}>
-					{ chr }
-				</div>
+			<div className={ className } key={ i }>
+				<div className='palette-color' style={{ backgroundColor: color }}
+					onClick={ handleClick }>{ chr }</div>
 				<div className='palette-num'>{ i }</div>
 			</div>
 		)

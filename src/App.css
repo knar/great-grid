@@ -12,11 +12,22 @@
 .palette-tile {
 	padding: 10px;
 	text-align: center;
-	background-color: #def;
+	background-color: #d3dce4;
 }
 
-.palette-tile.palette-tile-selected {
-	background-color: #fff;
+.palette-tile:first-child {
+	border-bottom-left-radius: 6px;
+}
+
+.palette-tile:last-child {
+	border-bottom-right-radius: 6px;
+}
+
+.palette-tile.palette-tile-selected > .palette-color {
+	border: 4px solid #fff;
+	line-height: 56px;
+	width: 56px;
+	height: 56px;
 }
 
 .palette-color {
@@ -26,6 +37,8 @@
 	font-family: 'monospace';
 	font-weight: 700;
 	color: rgba(255, 255, 255, 0.7);
+	border-radius: 6px;
+	cursor: pointer;
 }
 
 .palette-num {

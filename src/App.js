@@ -14,10 +14,12 @@ function App() {
 	const [selected, setSelected] = useState(0)
 
 	useEffect(() => {
-		const keyListener = document.addEventListener('keydown', (e) => {
+		const keyListener = (e) => {
 			if (e.key < '0' || e.key > '9') return
 			setSelected(parseInt(e.key))
-		})
+		}
+
+		document.addEventListener('keydown', keyListener)
 
 		subscribeToGrid('lobby', data => {
 			setTiles(data.tiles)

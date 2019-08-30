@@ -75,7 +75,7 @@ export async function setGrid(id, row, col, tile) {
 
 export async function setSize(id, { rows, cols }) {
 	await db.collection('grids').doc(id).update({
-		'grid.size.rows': rows,
-		'grid.size.cols': cols,
+		'size.rows': rows,
+		'size.cols': cols,
 	})
 }

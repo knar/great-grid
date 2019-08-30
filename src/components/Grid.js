@@ -5,8 +5,8 @@ import { setGrid } from '../db.js'
 export default function Grid({ grid: { grid, tiles, size }, selected }) {
 	const { rows, cols } = size
 
-	const handleClick = (row, col) => {
-		setGrid('lobby', row, col, selected)
+	const handleClick = (e, row, col) => {
+		setGrid('lobby', row, col, (e.button !== 2) ? selected : 0)
 	}
 
 	const renderTile = (i, j) => {
@@ -17,7 +17,8 @@ export default function Grid({ grid: { grid, tiles, size }, selected }) {
 		return (
 			<div className='grid-tile' key={ key }
 				style={{ backgroundColor: tile.color }}
-				onClick={ () => handleClick(i, j) }
+				onMouseDown={ (e) => handleClick(e, i, j) }
+				onContextMenu={ (e) => e.preventDefault() }
 			/>
 		)
 	}

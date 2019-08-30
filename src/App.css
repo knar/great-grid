@@ -10,6 +10,7 @@
 .palette-container {
 	display: flex;
 	justify-content: center;
+	user-select: none;
 }
 
 .palette-tile {
@@ -70,6 +71,7 @@
 .grid-tile {
 	width: 64px;
 	height: 64px;
+	cursor: pointer;
 }
 
 .grid-tile:hover {

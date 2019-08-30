@@ -31,3 +31,9 @@
 .palette-num {
 	padding-top: 6px;
 }
+
+.picker {
+	position: absolute;
+	left: 50vw;
+	margin-left: -112px;
+}

@@ -14,7 +14,7 @@ function App() {
 	const [selected, setSelected] = useState(0)
 
 	useEffect(() => {
-		document.addEventListener('keydown', (e) => {
+		const keyListener = document.addEventListener('keydown', (e) => {
 			if (e.key < '0' || e.key > '9') return
 			setSelected(parseInt(e.key))
 		})
@@ -22,13 +22,18 @@ function App() {
 		subscribeToGrid('lobby', data => {
 			setTiles(data.tiles)
 		})
-	})
+
+		return (() => {
+			document.removeEventListener('keydown', keyListener)
+		})
+	}, [])
 
 	return (
 		<div className="App">
 			<Bar
 				tiles={ tiles }
 				selected={ selected }
+				setSelected= { setSelected }
 			/>
 		</div>
 	)

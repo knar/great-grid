@@ -1,13 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { ChromePicker } from 'react-color'
 
+import { setTile } from '../db.js'
 
-function Bar({ tiles, selected }) {
+function Bar({ tiles, selected, setSelected }) {
+	const [showColorPicker, setShowColorPicker] = useState(false)
 
 	const renderTile = ({ color, chr }, i) => {
 		const className = (i === selected) ? 'palette-tile palette-tile-selected' : 'palette-tile'
+		
+		const handleClick = () => {
+			if (selected === i && showColorPicker) {
+				setShowColorPicker(false)
+			} else {
+				setSelected(i)
+				setShowColorPicker(true)
+			}
+		}
 
 		return (
-			<div className={ className }>
+			<div className={ className } key={ i } onClick={ handleClick }>
 				<div className='palette-color' style={{ backgroundColor: color }}>
 					{ chr }
 				</div>
@@ -16,11 +28,27 @@ function Bar({ tiles, selected }) {
 		)
 	}
 
+	const renderPicker = () => {
+		return (
+			<div className='picker'>
+				<ChromePicker
+					color={ tiles[selected].color }
+					onChangeComplete= { handleColorChange }
+				/>
+			</div>
+		)
+	}
+
+	const handleColorChange = (color) => {
+		setTile('lobby', selected, { color: color.hex })
+	}
+
 	return (
-		<div className='palette-container'>
-			{
-				rotateLeft(tiles.map(renderTile))
-			}
+		<div>
+			<div className='palette-container'>
+				{ rotateLeft(tiles.map(renderTile)) }
+			</div>
+			{ showColorPicker ? renderPicker() : null }
 		</div>
 	)
 }

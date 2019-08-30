@@ -8,7 +8,7 @@ function Bar({ gridId, tiles, selected, setSelected }) {
 	
 	useEffect(() => {
 		const keyListener = (e) => {
-			if (e.key > 'a' && e.key < 'z') {
+			if (e.key >= 'a' && e.key <= 'z') {
 				setTile(gridId, selected, { chr: e.key.toUpperCase() })
 			} else if (e.key === 'Escape' && showColorPicker) {
 				setShowColorPicker(false)	

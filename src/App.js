@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 import Bar from './components/Bar.js'
+import Dimensions from './components/Dimensions.js'
 import Grid from './components/Grid.js'
 import './App.css'
 
@@ -50,6 +51,10 @@ function App() {
 				gridId={ gridId }
 				grid={ grid }
 				selected={ selected }
+			/>
+			<Dimensions
+				gridId={ gridId }
+				grid={ grid }
 			/>
 		</div>
 	)

@@ -16,22 +16,17 @@ firebase.initializeApp(firebaseConfig)
 const db = firebase.firestore()
 
 const defaultTiles = {
-	0: { color: '#000', chr: 'A' },
-	1: { color: '#111', chr: 'B' },
-	2: { color: '#222', chr: 'C' },
-	3: { color: '#333', chr: 'D' },
-	4: { color: '#444', chr: 'E' },
-	5: { color: '#555', chr: 'F' },
-	6: { color: '#666', chr: 'G' },
-	7: { color: '#777', chr: 'H' },
-	8: { color: '#888', chr: 'I' },
-	9: { color: '#999', chr: 'J' },
+	1: { color: '#45b2c4', chr: 'Z' },
+	2: { color: '#cb5342', chr: 'Z' },
+	3: { color: '#57a95b', chr: 'Z' },
+	4: { color: '#b05cc6', chr: 'Z' },
+	5: { color: '#999a3e', chr: 'Z' },
+	6: { color: '#7179cb', chr: 'Z' },
+	7: { color: '#c88542', chr: 'Z' },
+	8: { color: '#cf417e', chr: 'Z' },
+	9: { color: '#bf6c92', chr: 'Z' },
+	0: { color: '#ffffff', chr: 'X' },
 };
-
-const eight = new Array(8).fill(0)
-const defaultGrid = Object.fromEntries(
-	eight.flatMap((_, i) => eight.map((_, j) => [`${i},${j}`, 0]))
-)
 
 export async function subscribeToGrid(id, setGrid) {
 	if (!await doesGridExist(id)) {
@@ -53,7 +48,7 @@ export async function newGrid(id) {
 	await db.collection('grids').doc(id).set({
 		size: { rows: 8, cols: 8 },
 		tiles: defaultTiles,
-		grid: defaultGrid,
+		grid: {},
 	})
 
 	return id

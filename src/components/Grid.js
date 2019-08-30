@@ -12,7 +12,7 @@ export default function Grid({ gridId, grid: { grid, tiles, size }, selected }) 
 	const renderTile = (i, j) => {
 		const key = `${i},${j}`
 		const gridValue = grid[key]
-		const tile = tiles[gridValue]
+		const tile = tiles[gridValue || 0]
 
 		return (
 			<div className='grid-tile' key={ key }

@@ -1,4 +1,8 @@
-# great grid
-Real-time collaborative drawing tool.
+# `great-grid`
 
-Made to assist in simple grid-based level design.
+![Screen capture of a live editing session](great-grid.png)
+
+A little app to make tile based levels collaboratively.
+
+Choose a palette. Design your level. All realtime.
+

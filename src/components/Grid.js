@@ -2,11 +2,11 @@ import React from 'react'
 
 import { setGrid } from '../db.js'
 
-export default function Grid({ grid: { grid, tiles, size }, selected }) {
+export default function Grid({ gridId, grid: { grid, tiles, size }, selected }) {
 	const { rows, cols } = size
 
 	const handleClick = (e, row, col) => {
-		setGrid('lobby', row, col, (e.button !== 2) ? selected : 0)
+		setGrid(gridId, row, col, (e.button !== 2) ? selected : 0)
 	}
 
 	const renderTile = (i, j) => {

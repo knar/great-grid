@@ -33,7 +33,11 @@ const defaultGrid = Object.fromEntries(
 	eight.flatMap((_, i) => eight.map((_, j) => [`${i},${j}`, 0]))
 )
 
-export function subscribeToGrid(id, setGrid) {
+export async function subscribeToGrid(id, setGrid) {
+	if (!await doesGridExist(id)) {
+		await newGrid(id)
+	}
+
 	db.collection('grids').doc(id)
 		.onSnapshot((doc) => {
 			const grid = doc.data();
@@ -53,6 +57,11 @@ export async function newGrid(id) {
 	})
 
 	return id
+}
+
+export async function doesGridExist(id) {
+	const doc = await db.collection('grids').doc(id).get()
+	return doc.exists
 }
 
 export async function setTile(id, index, tile) {

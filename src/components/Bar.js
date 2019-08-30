@@ -3,13 +3,13 @@ import { ChromePicker } from 'react-color'
 
 import { setTile } from '../db.js'
 
-function Bar({ tiles, selected, setSelected }) {
+function Bar({ gridId, tiles, selected, setSelected }) {
 	const [showColorPicker, setShowColorPicker] = useState(false)
 	
 	useEffect(() => {
 		const keyListener = (e) => {
 			if (e.key > 'a' && e.key < 'z') {
-				setTile('lobby', selected, { chr: e.key.toUpperCase() })
+				setTile(gridId, selected, { chr: e.key.toUpperCase() })
 			} else if (e.key === 'Escape' && showColorPicker) {
 				setShowColorPicker(false)	
 			}
@@ -55,11 +55,15 @@ function Bar({ tiles, selected, setSelected }) {
 	}
 
 	const handleColorChange = (color) => {
-		setTile('lobby', selected, { color: color.hex })
+		setTile(gridId, selected, { color: color.hex })
+	}
+
+	const handleMouseLeave = () => {
+		setShowColorPicker(false)
 	}
 
 	return (
-		<div>
+		<div onMouseLeave={ handleMouseLeave }>
 			<div className='palette-container'>
 				{ rotateLeft(tiles.map(renderTile)) }
 			</div>

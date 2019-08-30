@@ -62,3 +62,9 @@ export async function setTile(id, index, tile) {
 	}
 	await db.collection('grids').doc(id).update(updates);
 }
+
+export async function setGrid(id, row, col, tile) {
+	await db.collection('grids').doc(id).update({
+		[`grid.${row},${col}`]: tile,
+	})
+}
